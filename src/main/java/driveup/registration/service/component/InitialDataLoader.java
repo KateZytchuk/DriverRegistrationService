@@ -5,10 +5,14 @@ import driveup.registration.service.model.User;
 import driveup.registration.service.repository.RoleRepository;
 import driveup.registration.service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
@@ -19,8 +23,13 @@ public class InitialDataLoader implements
         ApplicationListener<ContextRefreshedEvent> {
     boolean alreadySetup = false;
 
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -34,13 +43,14 @@ public class InitialDataLoader implements
         createRoleIfNotFound("ROLE_CUSTOMER");
 
         Role customerRole = roleRepository.findByName("ROLE_CUSTOMER");
+
         User user = new User();
-        user.setUserName("Test");
-        user.setSecondName("Test");
-        user.setPassword(passwordEncoder.encode("test"));
-        user.setEmail("test@test.com");
+        user.setEmail("test11@test.com");
+        user.setPhone("+380951683807");
+        user.setPassword(passwordEncoder.encode("test7"));
+        user.setSecondName("Test2");
+        user.setUserName("Test3");
         user.setRoles(Arrays.asList(customerRole));
-//        user.setEnabled(true);
         userRepository.save(user);
 
         alreadySetup = true;

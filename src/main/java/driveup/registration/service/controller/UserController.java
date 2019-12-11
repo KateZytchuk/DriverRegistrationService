@@ -1,5 +1,6 @@
 package driveup.registration.service.controller;
 
+import driveup.registration.service.exceptions.PhoneExistsException;
 import driveup.registration.service.model.User;
 import driveup.registration.service.request.RegistrationRequest;
 import driveup.registration.service.service.UserServiceImpl;
@@ -20,8 +21,8 @@ public class UserController {
 //    }
 
     @PostMapping("/save")
-    public ResponseEntity<User> save(@RequestBody RegistrationRequest registrationRequest) {
-        User user = userService.saveUser(registrationRequest);
+    public ResponseEntity<User> save(@RequestBody RegistrationRequest registrationRequest) throws PhoneExistsException {
+        User user = userService.registerNewUserAccount(registrationRequest);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package driveup.registration.service.service;
 
 import driveup.registration.service.exceptions.PhoneExistsException;
+import driveup.registration.service.model.Role;
 import driveup.registration.service.model.User;
 import driveup.registration.service.repository.UserRepository;
 import driveup.registration.service.request.RegistrationRequest;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
         user.setSecondName("");
         user.setPassword(registrationRequest.getPassword());
         user.setEmail("");
-        user.setRoles(Arrays.asList("ROLE_CUSTOMER"));
+        user.setRoles(((List) new Role("ROLE_CUSTOMER")));
         return userRepository.save(user);
     }
 

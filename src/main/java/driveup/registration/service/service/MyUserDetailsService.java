@@ -1,6 +1,7 @@
 package driveup.registration.service.service;
 
 
+import com.sun.org.apache.xerces.internal.xs.StringList;
 import driveup.registration.service.model.User;
 import driveup.registration.service.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +34,11 @@ public class MyUserDetailsService implements UserDetailsService {
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
+
         return new org.springframework.security.core.userdetails.User
                 (user.getPhone(), user.getPassword().toLowerCase(),
                         enabled, accountNonExpired, credentialsNonExpired,
-                        accountNonLocked, getAuthorities(user.getRoles()));
+                        accountNonLocked, getAuthorities(((StringList) user.getRoles())));
     }
 
     private static List<GrantedAuthority> getAuthorities(List<String> roles) {

@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.Collection;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -14,18 +14,19 @@ import java.util.List;
 @ToString
 @Builder
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 @NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
+    @NotNull
     private long userId;
 
     @Column(name = "phone", nullable = false, length = 13)
     private String phone;
 
-    @Column(name = "password", nullable = false, length = 30)
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Email
@@ -42,14 +43,21 @@ public class User {
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"),
+                    name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"))
+                    name = "role_id", referencedColumnName = "role_id"))
+    @Column(columnDefinition="text")
     private List<Role> roles;
 
-    public User(@JsonProperty("phone") String phone,
-                @JsonProperty("password") String password) {
+    public User(@JsonProperty("email") String email,
+                @JsonProperty("phone") String phone,
+                @JsonProperty("password") String password,
+                @JsonProperty("user_second_name") String secondName,
+                @JsonProperty("user_name") String userName) {
+        this.email = email;
         this.phone = phone;
         this.password = password;
+        this.secondName = secondName;
+        this.userName = userName;
     }
 }
