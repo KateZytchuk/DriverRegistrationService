@@ -1,11 +1,13 @@
 package driveup.registration.service.service;
 
+import driveup.registration.service.exceptions.PhoneExistsException;
 import driveup.registration.service.model.User;
 import driveup.registration.service.request.RegistrationRequest;
 
 public interface UserService {
 
-    User saveUser(RegistrationRequest registrationRequest);
+    public User registerNewUserAccount(RegistrationRequest registrationRequest)
+            throws PhoneExistsException;
 
     User updatePassword(long customerId, String oldPassword, String newPassword);
 

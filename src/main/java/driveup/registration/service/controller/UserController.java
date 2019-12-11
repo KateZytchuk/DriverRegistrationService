@@ -26,35 +26,35 @@ public class UserController {
     }
 
     @PutMapping("/changePassword")
-    public ResponseEntity<User> changePassword(@PathVariable long customerId,
+    public ResponseEntity<User> changePassword(@PathVariable long userId,
                                                @PathVariable String oldPassword,
                                                @PathVariable String newPassword) {
-        User customer = userService.updatePassword(customerId, oldPassword, newPassword);
+        User customer = userService.updatePassword(userId, oldPassword, newPassword);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @PutMapping("/updateProfile")
-    public ResponseEntity<User> updateCustomer(@PathVariable long customerId, String email,
+    public ResponseEntity<User> updateCustomer(@PathVariable long userId, String email,
                                                String firstName, String secondName) {
-        User customer = userService.updateCustomer(customerId, email, firstName, secondName);
+        User customer = userService.updateCustomer(userId, email, firstName, secondName);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @GetMapping("/get_customer_by_id")
-    public ResponseEntity<User> getCustomerById(@PathVariable long customerId) {
-        User customer = userService.getCustomerById(customerId);
+    public ResponseEntity<User> getCustomerById(@PathVariable long userId) {
+        User customer = userService.getCustomerById(userId);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
     @GetMapping("/get_email_by_id")
-    public ResponseEntity<String> getEmailById(@PathVariable long customerId) {
-        String email = userService.getEmailById(customerId);
+    public ResponseEntity<String> getEmailById(@PathVariable long userId) {
+        String email = userService.getEmailById(userId);
         return new ResponseEntity<>(email, HttpStatus.OK);
     }
 
     @GetMapping("/get_phone_by_id")
-    public ResponseEntity<String> getPhoneById(@PathVariable long customerId) {
-        String phone = userService.getPhoneById(customerId);
+    public ResponseEntity<String> getPhoneById(@PathVariable long userId) {
+        String phone = userService.getPhoneById(userId);
         return new ResponseEntity<>(phone, HttpStatus.OK);
     }
 
